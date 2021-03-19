@@ -35,7 +35,7 @@ galleryUlEl.addEventListener('click', onImageContainerClick)
 iconClose.addEventListener('click', onCloseModal)
 window.addEventListener('keydown', onEscCloseModal)
 closeModalOnClickToOverlay.addEventListener('click', onClickToOverlayCloseModal)
-window.addEventListener('keydown', onSlideRightAndLeft)
+document.addEventListener('keydown', onSlideRightAndLeft)
 
 function onImageContainerClick(e) {
     e.preventDefault()
@@ -72,9 +72,7 @@ function onSlideRightAndLeft(e) {
         } else {
             index +=1;
         }
-
         lightboxImageRef.src = gallery[index].original
-
     }
 
     if (e.code === 'ArrowLeft') {
@@ -84,7 +82,6 @@ function onSlideRightAndLeft(e) {
             index -=1
         }
         lightboxImageRef.src = gallery[index].original
-        
     }
     console.log(e.code);    
 }
