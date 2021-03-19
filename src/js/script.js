@@ -35,6 +35,7 @@ galleryUlEl.addEventListener('click', onImageContainerClick)
 iconClose.addEventListener('click', onCloseModal)
 window.addEventListener('keydown', onEscCloseModal)
 closeModalOnClickToOverlay.addEventListener('click', onClickToOverlayCloseModal)
+window.addEventListener('keydown', onSlideRightAndLeft)
 
 function onImageContainerClick(e) {
     e.preventDefault()
@@ -42,12 +43,10 @@ function onImageContainerClick(e) {
     if (evt.nodeName !== 'IMG') {
         return
     }
-    
     addIsOpen.classList.add('is-open')
     lightboxImageRef.src = evt.dataset.source
     lightboxImageRef.alt = evt.alt
 }
-
 
 function onCloseModal(e) {
     addIsOpen.classList.remove('is-open')
@@ -57,14 +56,35 @@ function onCloseModal(e) {
 
 function onEscCloseModal(e) {
     if (e.code === 'Escape') {
-        addIsOpen.classList.remove('is-open')
-        lightboxImageRef.src = '';
-        lightboxImageRef.alt = '';
+        onCloseModal()
     }
 }
 
 function onClickToOverlayCloseModal(e) {
-    addIsOpen.classList.remove('is-open')
-    lightboxImageRef.src = '';
-    lightboxImageRef.alt = '';
+    onCloseModal()
+}
+
+function onSlideRightAndLeft(e) {
+    let index = gallery.findIndex(item => item.original === lightboxImageRef.src)
+    if (e.code === 'ArrowRight') {
+        if ((index + 1) === gallery.length) {
+            index = 0;
+        } else {
+            index +=1;
+        }
+
+        lightboxImageRef.src = gallery[index].original
+
+    }
+
+    if (e.code === 'ArrowLeft') {
+        if (index === 0) {
+            index = gallery.length -1
+        } else {
+            index -=1
+        }
+        lightboxImageRef.src = gallery[index].original
+        
+    }
+    console.log(e.code);    
 }
